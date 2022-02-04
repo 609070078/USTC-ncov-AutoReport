@@ -30,4 +30,5 @@ jobs:
         BARK_URL: ${{ secrets.BARK_URL }}
       run: |
         echo "$DATA_FILE" > ./data.json
-        python report.py data.json "$STUID" "$PASSWORD" && curl "$BARK_URL/GitHub Actions/健康打卡成功" || curl "$BARK_URL/GitHub Actions/健康打卡失败"
+        # python report.py data.json "$STUID" "$PASSWORD" && curl "$BARK_URL/GitHub Actions/健康打卡成功" || curl "$BARK_URL/GitHub Actions/健康打卡失败"
+        python report.py data.json "$STUID" "$PASSWORD"
