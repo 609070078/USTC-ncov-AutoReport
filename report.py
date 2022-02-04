@@ -37,7 +37,7 @@ class Report(object):
         soup = text2soup(result.text)
         token = soup.find("input", {"name": "_token"})['value']
 
-        with open(self.data_path, "r+") as f:
+        with open(self.data_path, "r+", encoding='utf-8') as f:
             data = f.read()
             data = json.loads(data)
             data["_token"] = token
