@@ -48,25 +48,27 @@ class Report(object):
 
         # 上报数据
         session.post(REPORT_URL, data=data, headers=headers)
+        
+        return True
 
-        # 获取最近一次打卡时间
-        result = session.get("http://weixine.ustc.edu.cn/2020")
-        soup = text2soup(result.text)
-        token = soup.find("span", {"style": "position: relative; top: 5px; color: #666;"})
-        if DATE_PATTERN.search(token.text) is not None:
-            date = DATE_PATTERN.search(token.text).group()
-            print("Latest report: " + date)
-            date = date + " +0800"
-            reporttime = datetime.datetime.strptime(date, "%Y-%m-%d %H:%M:%S %z")
-            timenow = datetime.datetime.now(pytz.timezone('Asia/Shanghai'))
-            delta = timenow - reporttime
-            print("{} second(s) before.".format(delta.seconds))
-            # 上一次打卡时间距现在小于120s则打卡成功
-            if delta.seconds < 120:
-                print("Report successful!")
-                return True
-        print("Report failed!")
-        return False
+#         # 获取最近一次打卡时间
+#         result = session.get("http://weixine.ustc.edu.cn/2020")
+#         soup = text2soup(result.text)
+#         token = soup.find("span", {"style": "position: relative; top: 5px; color: #666;"})
+#         if DATE_PATTERN.search(token.text) is not None:
+#             date = DATE_PATTERN.search(token.text).group()
+#             print("Latest report: " + date)
+#             date = date + " +0800"
+#             reporttime = datetime.datetime.strptime(date, "%Y-%m-%d %H:%M:%S %z")
+#             timenow = datetime.datetime.now(pytz.timezone('Asia/Shanghai'))
+#             delta = timenow - reporttime
+#             print("{} second(s) before.".format(delta.seconds))
+#             # 上一次打卡时间距现在小于120s则打卡成功
+#             if delta.seconds < 120:
+#                 print("Report successful!")
+#                 return True
+#         print("Report failed!")
+#         return False
 
 
 if __name__ == "__main__":
